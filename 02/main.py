@@ -1,47 +1,28 @@
 import re
 
 
-def isValid(line):
+def parse_password_line(line):
     matches = re.match(r"(\d+)-(\d+) (\w): (\w+)", line)
-    min = int(matches.group(1))
-    max = int(matches.group(2))
-    seek = matches.group(3)
-    password = matches.group(4)
-
-    seek_cnt = len([c for c in password if c == seek])
-
-    if min <= seek_cnt <= max:
-        return True
-
-    return False
+    return int(matches.group(1)), int(matches.group(2)), matches.group(3), matches.group(4)
 
 
-def isValidTwo(line):
-    matches = re.match(r"(\d+)-(\d+) (\w): (\w+)", line)
-    a = int(matches.group(1))
-    b = int(matches.group(2))
-    seek = matches.group(3)
-    password = matches.group(4)
+def is_valid_part_one(line):
+    minimum, maximum, seek, password = parse_password_line(line)
+    return int(minimum) <= len([c for c in password if c == seek]) <= int(maximum)
 
+
+def is_valid_part_two(line):
+    a, b, seek, password = parse_password_line(line)
     return (password[a - 1] == seek) ^ (password[b - 1] == seek)
+
+
+def count_valid(valid_function, lines):
+    return len([line for line in lines if valid_function(line)])
 
 
 if __name__ == '__main__':
     with open('./input.txt') as f:
         lines = f.readlines()
 
-        valid_cnt = 0
-
-        for line in lines:
-            if isValid(line):
-                valid_cnt = valid_cnt + 1
-
-        print(valid_cnt)
-
-        valid_cnt_two = 0
-
-        for line in lines:
-            if isValidTwo(line):
-                valid_cnt_two = valid_cnt_two + 1
-
-        print(valid_cnt_two)
+        print('Part 1 Answer: ', count_valid(is_valid_part_one, lines))
+        print('Part 2 Answer: ', count_valid(is_valid_part_two, lines))
