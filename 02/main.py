@@ -8,7 +8,7 @@ def parse_password_line(line):
 
 def is_valid_part_one(line):
     minimum, maximum, seek, password = parse_password_line(line)
-    return int(minimum) <= len([c for c in password if c == seek]) <= int(maximum)
+    return minimum <= len([c for c in password if c == seek]) <= maximum
 
 
 def is_valid_part_two(line):
