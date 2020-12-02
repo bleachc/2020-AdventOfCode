@@ -23,12 +23,7 @@ def isValidTwo(line):
     seek = matches.group(3)
     password = matches.group(4)
 
-    if password[a - 1] == seek and password[b - 1] != seek:
-        return True
-    if password[a - 1] != seek and password[b - 1] == seek:
-        return True
-
-    return False
+    return (password[a - 1] == seek) ^ (password[b - 1] == seek)
 
 
 if __name__ == '__main__':
