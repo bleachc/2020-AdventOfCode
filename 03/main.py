@@ -11,7 +11,7 @@ def print_map(map):
     for row in map:
         txt = txt + ''.join(row) + '\n'
 
-    print txt
+    print(txt)
 
 
 def extend_map(map, xv, yv):
@@ -41,7 +41,6 @@ def count_trees(map, cur_x, cur_y, xv, yv):
         cur_x, cur_y = cur_x + xv, cur_y + yv
 
         if 0 < cur_y > max_y:
-            print_map(extended_map)
             return tree_count
 
         tree_count = tree_count + 1 if has_tree(extended_map, cur_x, cur_y) else tree_count
